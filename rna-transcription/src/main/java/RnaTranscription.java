@@ -13,6 +13,6 @@ public class RnaTranscription {
     }};
 
     public String ofDna(final String dnaString) {
-        return dnaString.isEmpty() ? "" : dnaString.chars().mapToObj(i -> (char) i).map(COMPLEMENTS::get).collect(joining());
+        return dnaString.chars().mapToObj(i -> (char) i).map(COMPLEMENTS::get).collect(joining());
     }
 }
