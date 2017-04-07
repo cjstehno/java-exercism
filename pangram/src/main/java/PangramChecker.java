@@ -1,6 +1,11 @@
+import static java.lang.String.valueOf;
+
 public class PangramChecker {
 
-    public boolean isPangram(String input) {
-        throw new UnsupportedOperationException("Method has not been implemented yet.");
+    private static final String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    public boolean isPangram(final String input) {
+        final String upperInput = input.toUpperCase();
+        return LETTERS.chars().mapToObj(i -> valueOf((char) i)).allMatch(upperInput::contains);
     }
 }
