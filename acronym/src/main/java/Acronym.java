@@ -1,34 +1,34 @@
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import static java.lang.Character.isLetter;
 import static java.lang.Character.isUpperCase;
 import static java.lang.Character.toUpperCase;
+import static java.lang.String.valueOf;
 
 public class Acronym {
 
     private final String acronym;
 
     Acronym(final String phrase) {
-        final StringBuffer str = new StringBuffer();
-
         final String[] words = phrase.split(" |-");
 
-        for (final String word : words) {
+        this.acronym = Arrays.stream(words).map(word -> {
             if (isAllCaps(word)) {
-                str.append(word.charAt(0));
+                return valueOf(word.charAt(0));
 
             } else {
-                str.append(toUpperCase(word.charAt(0)));
+                final StringBuffer str = new StringBuffer(valueOf(toUpperCase(word.charAt(0))));
 
                 for (int ch = 1; ch < word.length(); ch++) {
                     if (isUpperCase(word.charAt(ch)) || word.charAt(ch - 1) == '-') {
                         str.append(toUpperCase(word.charAt(ch)));
                     }
                 }
-            }
-        }
 
-        this.acronym = str.toString();
+                return str.toString();
+            }
+        }).collect(Collectors.joining());
     }
 
     String get() {
