@@ -4,11 +4,11 @@ public class Scrabble {
 
     private final int score;
 
-    Scrabble(final String input) {
+    public Scrabble(final String input) {
         score = (input != null ? input : "").chars().map(operand -> score((char) operand)).sum();
     }
 
-    int getScore() {
+    public int getScore() {
         return score;
     }
 
