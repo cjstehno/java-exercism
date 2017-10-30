@@ -1,34 +1,30 @@
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
-import static java.lang.Character.isLetter;
-import static java.lang.Character.isUpperCase;
-import static java.lang.Character.toUpperCase;
+import static java.lang.Character.*;
 import static java.lang.String.valueOf;
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.joining;
 
 public class Acronym {
 
     private final String acronym;
 
-    Acronym(final String phrase) {
-        final String[] words = phrase.split(" |-");
+    public Acronym(final String phrase) {
+        final String[] words = phrase.split("[ -]");
 
-        this.acronym = Arrays.stream(words).map(word -> {
-            if (isAllCaps(word)) {
-                return valueOf(word.charAt(0));
+        this.acronym = stream(words)
+            .map(word -> isAllCaps(word) ? valueOf(word.charAt(0)) : acronymizeWord(word))
+            .collect(joining());
+    }
 
-            } else {
-                final StringBuffer str = new StringBuffer(valueOf(toUpperCase(word.charAt(0))));
+    private static String acronymizeWord(final String word) {
+        final StringBuffer str = new StringBuffer(valueOf(toUpperCase(word.charAt(0))));
 
-                for (int ch = 1; ch < word.length(); ch++) {
-                    if (isUpperCase(word.charAt(ch)) || word.charAt(ch - 1) == '-') {
-                        str.append(toUpperCase(word.charAt(ch)));
-                    }
-                }
-
-                return str.toString();
+        for (int ch = 1; ch < word.length(); ch++) {
+            if (isUpperCase(word.charAt(ch)) || word.charAt(ch - 1) == '-') {
+                str.append(toUpperCase(word.charAt(ch)));
             }
-        }).collect(Collectors.joining());
+        }
+
+        return str.toString();
     }
 
     String get() {
