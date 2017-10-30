@@ -1,28 +1,24 @@
-import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 class RaindropConverter {
 
     String convert(final int number) {
-        final List<String> parts = new LinkedList<>();
+        final StringBuilder str = new StringBuilder();
 
         if (number % 3 == 0) {
-            parts.add("Pling");
+            str.append("Pling");
         }
 
         if (number % 5 == 0) {
-            parts.add("Plang");
+            str.append("Plang");
         }
 
         if (number % 7 == 0) {
-            parts.add("Plong");
+            str.append("Plong");
         }
 
-        if( parts.isEmpty() ){
-            parts.add(String.valueOf(number));
+        if (str.length() == 0) {
+            str.append(String.valueOf(number));
         }
 
-        return parts.stream().collect(Collectors.joining(""));
+        return str.toString();
     }
 }
