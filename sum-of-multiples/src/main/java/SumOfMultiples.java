@@ -5,11 +5,11 @@ class SumOfMultiples {
 
     private final int sum;
 
-    SumOfMultiples(int number, int[] set) {
+    SumOfMultiples(int number, int[] multiples) {
         final Set<Integer> items = new HashSet<>();
 
         for (int n = 1; n < number; n++) {
-            for (int m : set) {
+            for (int m : multiples) {
                 if (n % m == 0) {
                     items.add(n);
                 }
