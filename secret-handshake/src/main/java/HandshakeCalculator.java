@@ -1,34 +1,28 @@
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Consumer;
+
+import static java.util.Collections.reverse;
 
 class HandshakeCalculator {
 
     List<Signal> calculateHandshake(final int number) {
         final List<Signal> signals = new LinkedList<>();
 
-        String binary = Integer.toBinaryString(number);
+        final String input = Integer.toBinaryString(number);
 
-        if (binary.length() > 0 && binary.charAt(binary.length() - 1) == '1') {
-            signals.add(Signal.WINK);
-        }
-
-        if (binary.length() > 1 && binary.charAt(binary.length() - 2) == '1') {
-            signals.add(Signal.DOUBLE_BLINK);
-        }
-
-        if (binary.length() > 2 && binary.charAt(binary.length() - 3) == '1') {
-            signals.add(Signal.CLOSE_YOUR_EYES);
-        }
-
-        if (binary.length() > 3 && binary.charAt(binary.length() - 4) == '1') {
-            signals.add(Signal.JUMP);
-        }
-
-        if (binary.length() > 4 && binary.charAt(binary.length() - 5) == '1') {
-            Collections.reverse(signals);
-        }
+        onInput(input, 1, op -> signals.add(Signal.WINK));
+        onInput(input, 2, op -> signals.add(Signal.DOUBLE_BLINK));
+        onInput(input, 3, op -> signals.add(Signal.CLOSE_YOUR_EYES));
+        onInput(input, 4, op -> signals.add(Signal.JUMP));
+        onInput(input, 5, op -> reverse(signals));
 
         return signals;
+    }
+
+    private static void onInput(final String input, final int offset, final Consumer<Void> consumer) {
+        if (input.length() > (offset - 1) && input.charAt(input.length() - offset) == '1') {
+            consumer.accept(null);
+        }
     }
 }
