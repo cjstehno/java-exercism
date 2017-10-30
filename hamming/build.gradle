@@ -9,7 +9,12 @@ repositories {
 dependencies {
   testCompile "junit:junit:4.12"
 }
+
+sourceCompatibility = 8
+targetCompatibility = 8
+
 test {
+    maxParallelForks = 4
   testLogging {
     exceptionFormat = 'full'
     events = ["passed", "failed", "skipped"]
